@@ -19,7 +19,9 @@ export class SallonService {
   }
 
   findAll():Promise<ISallon[]> {
-    return this.sallonModel.find().exec()
+    return this.sallonModel.find()
+    .select('-__v')
+    .exec()
   }
 
   findOne(id: string) :Promise<ISallon>{

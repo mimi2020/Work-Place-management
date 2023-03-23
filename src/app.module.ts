@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { SallonModule } from './sallon/sallon.module';
+import { DepartementModule } from './departement/departement.module';
 @Module({
   imports: [MongooseModule.forRoot("mongodb://localhost:27017", { dbName: "Work-place-management" }),
 
@@ -17,7 +18,10 @@ import { SallonModule } from './sallon/sallon.module';
   ConfigModule.forRoot(),
 
   
-  SallonModule,],
+  SallonModule,
+
+  
+  DepartementModule,],
   controllers: [AppController],
   providers: [AppService],
 })
