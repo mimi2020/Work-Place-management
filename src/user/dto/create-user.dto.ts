@@ -8,6 +8,9 @@ export class CreateUserDto {
   @ApiProperty({ type: String, description: 'required' }) @IsNotEmpty() @IsString() password: string;
   @ApiProperty({ type: String, description: 'required' }) @IsNotEmpty() @IsString() address: string;
   @ApiProperty({ type: Number, description: 'required' }) @IsNotEmpty() @IsNumber() phone: number;
+
+  @ApiProperty({ type: String, description: 'required' }) @IsNotEmpty() @IsString() ID_departement:string;
+  
   refreshToken: string;
 
 }

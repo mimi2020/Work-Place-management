@@ -16,39 +16,39 @@ import { AccessTokenGuard } from '../common/guards/accessToken.guard';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-//   @Post()
+  @Post()
 
-// @ApiResponse({
-//   status: 200,
-//   description: 'A post has been successfully fetched',
-//   type: User
-// })
-// @ApiResponse({
-//   status: 404,
-//   description: 'A post with given id does not exist.'
-// })
- //
-//  async createUser(@Res() response, @Body() createUserDto:CreateUserDto){
-//     try {
-//       const newUser = await this.userService.create(createUserDto);
-//       console.log(newUser)
-//       return response.status(HttpStatus.CREATED).json({
-//         status:200,
-//         message:"user is created successfully",
-//         data: newUser,
-//       })
+@ApiResponse({
+  status: 200,
+  description: 'A post has been successfully fetched',
+  type: User
+})
+@ApiResponse({
+  status: 404,
+  description: 'A post with given id does not exist.'
+})
+ 
+ async createUser(@Res() response, @Body() createUserDto:CreateUserDto){
+    try {
+      const newUser = await this.userService.create(createUserDto);
+      console.log(newUser)
+      return response.status(HttpStatus.CREATED).json({
+        status:200,
+        message:"user is created successfully",
+        data: newUser,
+      })
      
-//     } catch (error) {
-//       return response.status(HttpStatus.BAD_REQUEST).json({
-//         //message:"user is created",
-//         error
-//       })
-//     }
-//   }
+    } catch (error) {
+      return response.status(HttpStatus.BAD_REQUEST).json({
+        //message:"user is created",
+        error
+      })
+    }
+  }
 
 
-@ApiBearerAuth('access-token')// to make the put of access-token on swagger
- @UseGuards(AccessTokenGuard)// to make it done only when the user is authorized bu the access-tiken
+// @ApiBearerAuth('access-token')// to make the put of access-token on swagger
+//  @UseGuards(AccessTokenGuard)// to make it done only when the user is authorized bu the access-tiken
      
 @Get()
   @ApiResponse({

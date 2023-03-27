@@ -1,15 +1,24 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { CreateDepartementDto } from './dto/create-departement.dto';
 import { UpdateDepartementDto } from './dto/update-departement.dto';
+import {IDepartement}from './interface/departement.interface'
 
 @Injectable()
 export class DepartementService {
-  create(createDepartementDto: CreateDepartementDto) {
-    return 'This action adds a new departement';
+  constructor(
+  
+    @InjectModel('departement')
+    private departementModel: Model<IDepartement>,
+  ) { }
+  async create(createDepartementDto: CreateDepartementDto) {
+    const newdep = await new this.departementModel(createDepartementDto)
+    return newdep.save();
   }
 
   findAll() {
-    return `This action returns all departement`;
+    return this.departementModel.find();
   }
 
   findOne(id: number) {

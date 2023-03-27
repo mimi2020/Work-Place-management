@@ -1,5 +1,7 @@
 import { Prop,Schema, SchemaFactory } from "@nestjs/mongoose";
 import * as argon2 from 'argon2';
+import { Departement } from "src/departement/entities/departement.entity";
+import {Types, SchemaTypes} from "mongoose";
 @Schema()
 export class User {
 @Prop()
@@ -13,6 +15,13 @@ address:string;
 @Prop()
 phone:number;
 //add reftrech token to be added in case of login
+
+
+
+@Prop({type:SchemaTypes.ObjectId, ref:'Departement'})
+ID_departement:Departement;
+
+
 @Prop()
    refreshToken: string;
 
