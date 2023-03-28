@@ -8,14 +8,14 @@ export class CreateDepartementDto {
      @IsString() 
      name: string;
 
-    //  @ApiProperty({ type: String }) 
+     @ApiProperty({ type: String }) 
     
-    // HeadOfDepartement:string
+    HeadOfDepartement:string
 
-    // @ApiProperty({ type: String}) 
+    @ApiProperty({ type: String}) 
    
     
-    //  ListOfEmployers:string[];
+     ListOfEmployers:string[];
 
 }
     

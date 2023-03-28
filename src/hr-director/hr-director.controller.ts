@@ -17,6 +17,7 @@ import { response } from 'express';
 import { HttpStatus } from '@nestjs/common/enums';
 import { Ihrdirector } from './interface/hr-director.interface';
 import { AccessTokenGuard } from 'src/common/guards/accessToken.guard';
+import { ISallon } from 'src/sallon/interface/sallon.interface';
 @Controller('hr-director')
 @ApiTags('hr-director')
 export class HrDirectorController {
@@ -119,4 +120,34 @@ export class HrDirectorController {
       });
     }
   }
+
+
+  @ApiParam({
+    name: 'id',
+    required: true,
+    description: 'Should be an id of a post that exists in the database',
+    //type: Number
+    type: String,
+  })
+
+  @Get('res:id')
+  async res( @Param('id') id: string, @Res() response): Promise<ISallon> {
+    console.log('id*********',id)
+    const depfind = await this.hrDirectorService.reservation(id);
+    try {
+      return response.status(HttpStatus.ACCEPTED).json({
+        status: 200,
+        message: 'user founed',
+        data: depfind,
+      });
+    } catch (error) {
+      response.status(HttpStatus.BAD_REQUEST).json({
+        status: 500,
+        message: 'user is not founed',
+      });
+    }
+  }
+
+
+
 }

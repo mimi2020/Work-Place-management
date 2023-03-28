@@ -33,7 +33,7 @@ export class HrDirectorService {
   }
 
   async findOne(id: string): Promise<Ihrdirector> {
-    return await this.hrDirectModel.findById({ _id: id }).exec();
+    return await this.hrDirectModel.findById({_id: id }).exec();
   }
 
   async update(
@@ -53,8 +53,9 @@ export class HrDirectorService {
   async reservation(id: string): Promise<ISallon> {
     const iddep = await this.departementModel
       .findById({ _id: id })
-      .select('-__v');
-
+      .select('-__v')
+     
+      
     const placedemande = (await iddep).ListOfEmployers.length;
     console.log('*****************PLACES DEMANDEES***********', placedemande);
 
