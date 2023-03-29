@@ -32,9 +32,9 @@ export class HrDirectorService {
     return await this.hrDirectModel.find().exec();
   }
 
-  async findOne(id: string): Promise<Ihrdirector> {
-    return await this.hrDirectModel.findById({_id: id }).exec();
-  }
+  // async findOne(id: string): Promise<Ihrdirector> {
+  //   return await this.hrDirectModel.findById({_id: id }).exec();
+  // }
 
   async update(
     id: string,
@@ -54,18 +54,19 @@ export class HrDirectorService {
     const iddep = await this.departementModel
       .findById({ _id: id })
       .select('-__v')
+      .exec()
      
       
     const placedemande = (await iddep).ListOfEmployers.length;
     console.log('*****************PLACES DEMANDEES***********', placedemande);
 
     const FindSallon = this.sallonModel
-      .findOne({})
-      .where('nbplace')
-      .equals(placedemande + 2)
+      .findOne({capacity:{$gte:placedemande}})
+      // .where('nbplace')
+      // .equals(placedemande + 9)
       //FONCTION DANS mongoose > =
       .exec();
-
+      console.log('*****************FindSallon ***********', FindSallon);
     if (!FindSallon) {
       console.log('NOT FOUND SALLON');
     } else {

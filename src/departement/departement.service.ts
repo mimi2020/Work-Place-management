@@ -29,7 +29,7 @@ export class DepartementService {
     return `This action updates a #${id} departement`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} departement`;
+  remove(id: string) {
+    return this.departementModel.findByIdAndDelete(id);
   }
 }

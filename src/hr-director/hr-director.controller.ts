@@ -48,25 +48,25 @@ export class HrDirectorController {
     return this.hrDirectorService.findAll();
   }
 
-  @Get(':id')
-  async findOne(
-    @Param('id') id: string,
-    @Res() response,
-  ): Promise<Ihrdirector> {
-    const depfind = await this.hrDirectorService.findOne(id);
-    try {
-      return response.status(HttpStatus.ACCEPTED).json({
-        status: 200,
-        message: 'user founed',
-        data: depfind,
-      });
-    } catch (error) {
-      response.status(HttpStatus.BAD_REQUEST).json({
-        status: 500,
-        message: 'user is not founed',
-      });
-    }
-  }
+  // @Get(':id')
+  // async findOne(
+  //   @Param('id') id: string,
+  //   @Res() response,
+  // ): Promise<Ihrdirector> {
+  //   const depfind = await this.hrDirectorService.findOne(id);
+  //   try {
+  //     return response.status(HttpStatus.ACCEPTED).json({
+  //       status: 200,
+  //       message: 'user founed',
+  //       data: depfind,
+  //     });
+  //   } catch (error) {
+  //     response.status(HttpStatus.BAD_REQUEST).json({
+  //       status: 500,
+  //       message: 'user is not founed',
+  //     });
+  //   }
+  // }
 
   @ApiParam({
     name: 'id',

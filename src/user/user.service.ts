@@ -26,7 +26,7 @@ export class UserService {
   // }
 
   async create(createUserDto: CreateUserDto): Promise<IUser> {
-    const newUser = await new this.userModel(createUserDto);
+    const newUser = new this.userModel(createUserDto);
     await this.departementModel.updateOne(
       { _id: createUserDto.ID_departement },
       { $push: { ListOfEmployers: newUser._id } },
@@ -76,19 +76,26 @@ export class UserService {
   }
 
   async remove(id: string): Promise<IUser> {
-    const deletedUser = await this.userModel.findById({_id:id}).exec();
-    console.log("****************",deletedUser)
-    await this.departementModel.findByIdAndUpdate(
-      { _id: deletedUser.ID_departement },
-      { $pull: { ListOfemployers: deletedUser._id } },
-    );
+    const deletedUser = await this.userModel.findByIdAndDelete(id);
+    console.log("******deleted user***************",deletedUser)
+    await this.departementModel.updateOne({_id: deletedUser.ID_departement},
+      {$pull:{ListOfemployers:deletedUser._id}})
     if (!deletedUser) {
-      throw new NotFoundException(`userID #${id} was deleted`);
+      throw new NotFoundException(`userID #${id} was not deleted`);
     }
     return deletedUser;
 
 }
 
+// async deleteSubcategory(SubcategoryId: string):Promise<ISubcategory> {
+//   const deletedSubcategory=await this.subcategoryModel.findByIdAndDelete(SubcategoryId)
+//   await this.categoryModel.updateOne({_id:deletedSubcategory.category} ,
+//     {$pull : {subcategories:deletedSubcategory._id}})
+//   if(!deletedSubcategory){
+//     throw new NotFoundException('Subcategory not found')
+//   }
+//   return deletedSubcategory
+// }
 
 }
 /**import { Injectable, NotFoundException } from '@nestjs/common';

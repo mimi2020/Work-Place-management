@@ -29,6 +29,6 @@ export class DepartementController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.departementService.remove(+id);
+    return this.departementService.remove(id);
   }
 }
