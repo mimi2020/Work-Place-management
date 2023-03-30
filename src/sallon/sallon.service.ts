@@ -19,7 +19,7 @@ export class SallonService {
   }
 
   findAll():Promise<ISallon[]> {
-    return this.sallonModel.find()
+    return this.sallonModel.find().sort('capacity')
     .select('-__v')
     .exec()
   }

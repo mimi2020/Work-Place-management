@@ -15,13 +15,13 @@ export class HrDirectorService {
   constructor(
     @InjectModel('hr-director')
     private hrDirectModel: Model<Ihrdirector>,
-   // @InjectModel('Presence') private presenceModel: Model<IPresence>, // @InjectModel('departement') private departementModel: Model<IDepartement>,
+    // @InjectModel('Presence') private presenceModel: Model<IPresence>, // @InjectModel('departement') private departementModel: Model<IDepartement>,
 
     @InjectModel('departement')
     private departementModel: Model<IDepartement>,
 
     @InjectModel('sallon') private sallonModel: Model<ISallon>, // @InjectModel('departement') private departementModel: Model<IDepartement>,
-  ) {}
+  ) { }
 
   async create(createHrDirectorDto: CreateHrDirectorDto): Promise<Ihrdirector> {
     const nwehrdirector = await new this.hrDirectModel(createHrDirectorDto);
@@ -50,34 +50,29 @@ export class HrDirectorService {
     return this.hrDirectModel.findByIdAndDelete({ _id: id }).exec();
   }
 
-  async reservation(id: string): Promise<ISallon> {
+  async reservation(id: string): Promise<ISallon[]> {
     const iddep = await this.departementModel
       .findById({ _id: id })
       .select('-__v')
       .exec()
-     
-      
+
+
     const placedemande = (await iddep).ListOfEmployers.length;
     console.log('*****************PLACES DEMANDEES***********', placedemande);
+    const allsalon = await this.sallonModel.find().sort('capacity') .select('-__v').exec();
+    let FoundSallon;
+    for (let sallon of allsalon) {
+      if (sallon.capacity > placedemande + 1) {
+        FoundSallon = sallon
+        console.log('***PLACES  DISPONIBES EN SALON*********', sallon.capacity);
+        console.log('***ID  SALON*********', sallon._id);
+        console.log('***name  SALON *********', sallon.name);
+        return FoundSallon;
 
-    const FindSallon = this.sallonModel
-      .findOne({capacity:{$gte:placedemande}})
-      // .where('nbplace')
-      // .equals(placedemande + 9)
-      //FONCTION DANS mongoose > =
-      .exec();
-      console.log('*****************FindSallon ***********', FindSallon);
-    if (!FindSallon) {
-      console.log('NOT FOUND SALLON');
-    } else {
-      const placeDispo = (await FindSallon).capacity;
-      const idSallon = (await FindSallon)._id;
-      const nameSallon = (await FindSallon).name;
+      }
 
-      console.log('***PLACES  DISPONIBES EN SALON*********', placeDispo);
-      console.log('***ID  SALON*********', idSallon);
-      console.log('***name  SALON *********', nameSallon);
+      else { console.log("NO PLACE IS AVAILBALE") }
     }
-    return FindSallon;
+
   }
 }

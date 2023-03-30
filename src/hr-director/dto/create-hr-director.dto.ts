@@ -6,6 +6,6 @@ import { CreateUserDto } from "src/user/dto/create-user.dto";
 
 
 export class CreateHrDirectorDto extends CreateUserDto {
-    @ApiProperty({ type: String, description: 'required' }) @IsNotEmpty() @IsNumber() email2: string;
+    @ApiProperty({ type: String, description: 'required' }) @IsNotEmpty() @IsEmail() email2: string;
     refreshToken: string;
 }

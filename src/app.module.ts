@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import { SallonModule } from './sallon/sallon.module';
 import { DepartementModule } from './departement/departement.module';
 import { HrDirectorModule } from './hr-director/hr-director.module';
+import { PresenceModule } from './presence/presence.module';
 @Module({
   imports: [MongooseModule.forRoot("mongodb://localhost:27017", { dbName: "Work-place-management" }),
 
@@ -25,7 +26,10 @@ import { HrDirectorModule } from './hr-director/hr-director.module';
   DepartementModule,
 
   
-  HrDirectorModule,],
+  HrDirectorModule,
+
+  
+  PresenceModule,],
   controllers: [AppController],
   providers: [AppService],
 })
