@@ -10,15 +10,24 @@ import { UserSchema } from '../user/entities/user.entity';
 //import { JwtStrategy } from './jwt.strategy';
 import {AccessTokenStrategy}from './jwt.strategy';
 import { RefreshTokenStrategy } from './refreshToken.strategy';
+import { hr_directorSchema } from 'src/hr-director/entities/hr-director.entity';
+import {HrDirectorModule} from "../hr-director/hr-director.module"
+import { HrDirectorService } from 'src/hr-director/hr-director.service';
+import { SchemaDepartement } from 'src/departement/entities/departement.entity';
+import { SchemaSalon } from 'src/sallon/entities/sallon.entity';
+
 
 @Module({
-  imports: [UserModule, PassportModule, JwtModule.register({
+  imports: [UserModule,HrDirectorModule, PassportModule, JwtModule.register({
     secret: 'houssem',
     signOptions: { expiresIn: '60s' },
   }),
     MongooseModule.forFeature([{ name: 'Users', schema: UserSchema }]),
+    MongooseModule.forFeature([{schema:hr_directorSchema, name:'hr-director'}]),
+    MongooseModule.forFeature([{schema:SchemaDepartement, name:'departement'}]),
+    MongooseModule.forFeature([{schema:SchemaSalon, name:'sallon'}])
   ],
-  providers: [AuthService,LocalStrategy,AccessTokenStrategy,RefreshTokenStrategy]
+  providers: [AuthService,LocalStrategy,AccessTokenStrategy,RefreshTokenStrategy,HrDirectorService]
   ,
   controllers: [AuthController],
 })

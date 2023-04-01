@@ -1,5 +1,5 @@
 
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { CreateHrDirectorDto } from './dto/create-hr-director.dto';
 import { UpdateHrDirectorDto } from './dto/update-hr-director.dto';
@@ -75,4 +75,12 @@ export class HrDirectorService {
     }
 
   }
+
+  async getUserByEmail(email: String): Promise<Ihrdirector> {
+    const existingUser = await this.hrDirectModel.findOne({ email: email }).exec();
+    console.log(existingUser)
+    if (!existingUser) { throw new NotFoundException(`hrdircetor #${email} not found`) }
+    return existingUser;
+  }
+
 }

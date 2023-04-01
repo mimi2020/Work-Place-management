@@ -76,13 +76,19 @@ export class UserService {
   }
 
   async remove(id: string): Promise<IUser> {
-    const deletedUser = await this.userModel.findByIdAndDelete(id);
+    const deletedUser = await this.userModel.findById(id);
     console.log("******deleted user***************",deletedUser)
-    await this.departementModel.updateOne({_id: deletedUser.ID_departement},
-      {$pull:{ListOfemployers:deletedUser._id}})
     if (!deletedUser) {
       throw new NotFoundException(`userID #${id} was not deleted`);
     }
+  await Promise.all([
+    this.userModel.deleteOne({_id:id}).exec(),
+     this.departementModel.updateOne({_id: deletedUser.ID_departement},
+      {$pull:{ListOfemployers:deletedUser._id}})
+     ])
+
+
+   
     return deletedUser;
 
 }
