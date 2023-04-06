@@ -4,12 +4,12 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 // import { Res } from '@nestjs/common/decorators';
 import { HttpStatus } from '@nestjs/common/enums';
-import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags,ApiBody } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {User} from './entities/user.entity'
 import { BadRequestException } from '@nestjs/common/exceptions';
 import { ObjectUnsubscribedError } from 'rxjs';
 import { AccessTokenGuard } from '../common/guards/accessToken.guard';
-import {CreateEmailDto} from "../email/dto/create-email.dto"
+
 
 @Controller('user')
 @ApiTags('user')
@@ -60,22 +60,8 @@ export class UserController {
     status: 404,
     description: 'there is no list found.'
   })
- async  findAll(@Res() response) {
-    // return this.userService.findAll();
-    try {
-      const  list=await this.userService.findAll()
-      console.log("#######",list)
-       response.status(HttpStatus.ACCEPTED).json({
-        message:"the user was removed successfully",
-        status:200,
-        data:list
-      })
-     } catch (error) {
-      response.status(HttpStatus.BAD_REQUEST).json({
-        message:"the user can not be removed",
-        status:200
-      })
-     }
+  findAll() {
+    return this.userService.findAll();
   }
 
 
@@ -184,26 +170,7 @@ export class UserController {
    }
   }
 
-  @ApiBody({
-    schema: {
-      type: 'object',
-      properties: {
-        name: { type: 'string' },
-         email: { type: 'string' }
-      }
-    }
-  }
-  )
-  @Post("mail")
-  async signUp(@Body() req:CreateEmailDto) {
-    const token = Math.floor(1000 + Math.random() * 9000).toString();
-    
-    const user={name:req.name,email:req.email}
-    console.log("*****USER*****",user)
-    await this.userService.sendUserConfirmation(user, token);
-    console.log("*****USER:TOKEN*********",token)
-  }
-
+  
 
 
 }

@@ -1,0 +1,117 @@
+// import { Controller, Get, Post, Body, Patch, Param, Delete,UploadedFile,Res ,Put} from '@nestjs/common';
+// import { tasksService } from './tasks.service';
+// import { CreateTaskDto } from './dto/create-task.dto';
+// import {UpdateTaskDto} from './dto/update-task.dto'
+// import { ApiConsumes, ApiParam, ApiResponse, ApiTags,ApiBody } from '@nestjs/swagger/dist/decorators';
+
+// import { HttpStatus } from '@nestjs/common/enums';
+
+// @Controller('tasks')
+// @ApiTags('tasks') // pour afficher sur swagger
+// export class tasksController {
+//   constructor(private readonly tasksService: tasksService) {}
+//   @ApiBody({
+//     schema: {
+//       type: 'object',
+//       properties: {
+//         name: { type: 'string' },
+//         description: { type: 'string' },
+//         location: { type: 'string' },
+//         shift: { type: 'string' },
+       
+       
+//       },
+//     },
+//   })
+  
+//   @Post() //creation pour ecrire dans la base /champ input
+//   async create(@Body() createtasksDto: CreateTaskDto) {
+    
+//     console.log('********',createtasksDto) 
+//     return await this.tasksService.create(createtasksDto); // appele service
+//   }
+
+//   @Get()
+//   findAll() {
+//     return this.tasksService.findAll();
+//   }
+
+//   @Get(':id')
+//   @ApiParam({
+//  name: 'id',
+//  required: true,
+//  description: 'Should be an id of a post that exists in the database',
+//  //type: Number
+//  type:String
+// })
+
+//  async findOne(@Param('id') id: string ,@Res() resonse) {
+//   // return this.tasksService.findOne(+id);
+//   //return this.tasksService.findOne(id);
+//   try {
+//    const tasks = await this.tasksService.findOne(id)
+//    return resonse.status(HttpStatus.ACCEPTED).json({
+//      data:tasks,
+//      message:"the tasks ByID is",
+//      status:200
+//    })
+//   } catch (error) {
+//    resonse.status(HttpStatus.BAD_REQUEST).json({
+//      message:"the tasks ByID is",
+//      status:400
+//    })
+//   }
+//  }
+//  @Put('/update/:id')
+//   @ApiParam({
+//     name:'id',
+//     required:true,
+//     description:'you should enter an ID',
+//     type:String
+//   })
+
+ 
+//   async update(@Param('id') id: string, @Body() updatetasksDto: UpdateTaskDto , @Res() response) {
+//     try {
+//       const tasksUpdated = await  this.tasksService.update(id, updatetasksDto);
+//       console.log(tasksUpdated)
+//       return response.status(HttpStatus.ACCEPTED).json({
+//         data:tasksUpdated,
+//         message:"the tasks is updated successfully",
+//         status:200
+//       })
+//      } catch (error) {
+//       response.status(HttpStatus.BAD_REQUEST).json({
+//         message:"the tasks ByID is",
+//         status:400
+//       })
+//      }
+//   }
+
+//   @Delete(':id')
+//   @ApiParam({
+//     name:'id',
+//     description:'id to delted',
+//     required:true,
+//     type:String
+//   })
+
+
+
+//   async remove(@Param('id') id: string ,@Res() response) {
+//    try {
+//     await this.tasksService.remove(id)
+//     response.status(HttpStatus.ACCEPTED).json({
+//       message:"the tasks was removed successfully",
+//       status:200
+//     })
+//    } catch (error) {
+//     response.status(HttpStatus.BAD_REQUEST).json({
+//       message:"the tasks can not be removed",
+//       status:200
+//     })
+//    }
+//   }
+
+  
+// }

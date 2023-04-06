@@ -7,17 +7,18 @@ import { HrDirectorService } from 'src/hr-director/hr-director.service';
 @Injectable()
 export class AuthService {
 
-  constructor(private readonly userService: UserService,
-     private jwtSerivce: JwtService,
-     private readonly hrDirectorservice: HrDirectorService,) {
+  constructor(private readonly userService: UserService, private jwtSerivce: JwtService,private readonly hrDirectorservice: HrDirectorService,) {
 
   }
 
   async validateUser(email: string, password: string): Promise<any> {
     console.log('%cusers.service.ts line:56 email', 'color: #007acc;', email);
-    const user = await this.userService.getUserByEmail(email) 
-
- 
+    //const user = await this.userService.getUserByEmail(email) 
+    const user=await this.hrDirectorservice.getUserByEmail(email)
+    // const obj1 = await this.userService.getUserByEmail(email)
+    // const obj2 = await this.hrDirectorservice.getUserByEmail(email)
+    // let user=null
+    // if(obj1){ user = obj1} else {user=obj2}
     console.log("***************",user)
    // const user = await (this.hrDirectorservice.getUserByEmail(email)||this.userService.getUserByEmail(email))
     if (!user) return null;

@@ -6,7 +6,7 @@ import { IUser } from './interfaces/user.interface';
 import { Model } from 'mongoose';
 import { NotFoundException } from '@nestjs/common/exceptions';
 import { IDepartement } from 'src/departement/interface/departement.interface';
-import { MailerService } from '@nestjs-modules/mailer';
+
 
 @Injectable()
 export class UserService {
@@ -18,7 +18,6 @@ export class UserService {
     private userModel: Model<IUser>,
     @InjectModel('departement')
     private departementModel: Model<IDepartement>,
-    private mailerService: MailerService
   ) { }
   // async create(createUserDto: CreateUserDto): Promise<IUser> {
   //   //return 'This action adds a new user';
@@ -37,10 +36,7 @@ export class UserService {
   async findAll(): Promise<IUser[]> {
     //  return `This action returns all user`;
     // return this.userModel.find().select('__v').exec()
-    return await this.userModel.find()
-   .populate('ID_departement','',this.departementModel)
-    .select('-__v')
-    .exec()
+    return this.userModel.find().select('-__v').exec()
   }
 
   async findOne(id: string): Promise<IUser> {
@@ -72,12 +68,11 @@ export class UserService {
     updateUserDto: UpdateUserDto,
   ): Promise<IUser> {
     console.log("id in userService is:", id);
- 
+    console.log("updateUserDto is:", updateUserDto);
     return this.userModel
       // .findByIdAndUpdate({_id:id}, updateUserDto, { new: true })
-      .findByIdAndUpdate({ _id: id }, updateUserDto, { new: true })
-   
-      
+      .findByIdAndUpdate({ _id: id }, updateUserDto)
+
   }
 
   async remove(id: string): Promise<IUser> {
@@ -98,25 +93,6 @@ export class UserService {
 
 }
 
-
-
-async sendUserConfirmation(user: any, token: string) {
-  const url = `index2.html/auth/confirm?token=${token}`;
- // const url=`index2.html`
-    console.log("*****URL*****",url)
-    
-   // console.log("*****mailerService*****",mailerService)
-    await this.mailerService.sendMail({
-      to: user.email,
-      // from: '"Support Team" <support@example.com>', // override default from
-      subject: 'Welcome to Nice App! Confirm your Email',
-      template: './confirmation', // `.hbs` extension is appended automatically
-      context: { // ✏️ filling curly brackets with content
-        name: user.name,
-        url,
-      },
-    });
-  }
 // async deleteSubcategory(SubcategoryId: string):Promise<ISubcategory> {
 //   const deletedSubcategory=await this.subcategoryModel.findByIdAndDelete(SubcategoryId)
 //   await this.categoryModel.updateOne({_id:deletedSubcategory.category} ,

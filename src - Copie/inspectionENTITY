@@ -1,0 +1,36 @@
+// import { Voiture } from './../../voitures/entities/voiture.entity';
+// import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose"
+// import { SchemaTypes } from "mongoose";
+
+// enum InspectionType {
+//     Bon_Fonctionement = 'Bon_Fonctionement',
+//     Mal_Fonctionement = 'Mal_Fonctionement',
+//     Pas_Fonctionement = 'Pas_Fonctionement',
+// }
+// @Schema({ timestamps: true })
+// export class Inspection {
+
+//     @Prop({ type: SchemaTypes.ObjectId, ref: 'voiture' })
+//     ListOfVoitures: Voiture;
+
+//     @Prop()
+//     Feux: {
+//         type: InspectionType 
+            
+//         // enum: ['Non_fonctionement', 'Mal-fonctionement', 'Bon-fonctionement'],
+//         // default: 'Bon-fonctionement'
+//     }
+
+//     // Consommables_avant: {
+//     //     type: String,
+//     //     enum: ['Non_fonctionement', 'Mal-fonctionement', 'Bon-fonctionement'],
+//     //     default: 'Bon-fonctionement'
+//     // }
+
+//     // Freinage: {
+//     //     type: String,
+//     //     enum: ['Non_fonctionement', 'Mal-fonctionement', 'Bon-fonctionement'],
+//     //     default: 'Bon-fonctionement'
+//     // }
+// }
+// export const InspectionSchema = SchemaFactory.createForClass(Inspection)
