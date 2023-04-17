@@ -74,11 +74,16 @@ export class AuthService {
     return argon2.hash(data);
   }
 
-  async logout(userId: string) {
+  // async logout(userId: string) {
+  //   console.log("****************logout auth service userId is:",userId)
+  //   return this.userService.update2(userId, { refreshToken: null });
+  // }
+  async logout(userId:string){
     console.log("userId is:",userId)
-    return this.userService.update2(userId, { refreshToken: null });
+    const refreshtoken=null;
+    console.log("test",refreshtoken)
+    return this.userService.update2(userId,refreshtoken)
   }
-
   async refreshTokens(userId: string, refreshToken: string) {
 
     const user = await this.userService.findOne(userId);

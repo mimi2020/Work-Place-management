@@ -5,14 +5,20 @@ import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder } from '@nestjs/swagger';
 import { SwaggerModule } from '@nestjs/swagger/dist';
 import * as basicAuth from 'express-basic-auth';
+import { join } from 'path';
+var express = require("express");
 async function bootstrap() {
  const app = await NestFactory.create(AppModule);
  app.enableCors();
-
+ const path = require("path");
+ app.use('/storages', express.static(path.join(__dirname, 'storages')));
  // this is for the validation
  app.useGlobalPipes(new ValidationPipe());
 // end of validation
-
+// app.useStaticAssets(join(__dirname, '..', 'public'), {
+//     index: false,
+//     prefix: '/public',
+// });
 //to add the auth swagger with pass and username
 app.use(
     ['/api','/docs-json']

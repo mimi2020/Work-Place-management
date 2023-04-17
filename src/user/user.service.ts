@@ -42,7 +42,14 @@ export class UserService {
     .select('-__v')
     .exec()
   }
-
+  async findItems(items:string): Promise<IUser[]> {
+    //  return `This action returns all user`;
+    // return this.userModel.find().select('__v').exec()
+    return await this.userModel.find({items:items})
+   .populate('ID_departement','',this.departementModel)
+    .select('-__v')
+    .exec()
+  }
   async findOne(id: string): Promise<IUser> {
     //return `This action returns a #${id} user`;
     return this.userModel.findOne({ _id: id })

@@ -4,8 +4,10 @@ export interface IUser extends Document {
     readonly email:string;
     readonly password:string;
     readonly address:string;
-    readonly phone:number;
+    readonly phone:string;
     readonly ID_departement:string;
+    readonly photo:string;
     // readonly ID_departement?:string;
+    readonly items:string;
      refreshToken: string;
 }

@@ -59,13 +59,12 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
   //   },
   transport :{
    host: "sandbox.smtp.mailtrap.io",
-  // host:"live.smtp.mailtrap.io",
+
     port: 2525,
     auth: {
      user: "1f90d744e76860",
      pass: "22128dc7d83407"
-    // user:"api",
-    // pass:"5114adccd5a9fcf67a9539ac16daf0b9"
+    
     }
   },
     defaults: {

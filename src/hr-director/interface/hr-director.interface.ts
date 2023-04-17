@@ -7,4 +7,5 @@ export interface Ihrdirector extends Document{
     readonly phone:number;
     readonly refreshToken: string;
     readonly email2:string
+    items: string
 }
