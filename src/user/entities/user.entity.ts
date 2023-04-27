@@ -9,7 +9,7 @@ export type UserDocument = HydratedDocument<User>;
 @Schema({ discriminatorKey: 'items' })
 export class User {
 
-   @Prop({ type: String, required: true, enum: [HrDirector.name,,User.name] })
+   @Prop({ type: String, required: true, enum: [HrDirector.name,User.name] })
    items: string
 @Prop()
 name:string;

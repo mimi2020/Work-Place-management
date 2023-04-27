@@ -12,6 +12,7 @@ import { AccessTokenGuard } from '../common/guards/accessToken.guard';
 import {CreateEmailDto} from "../email/dto/create-email.dto"
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import { AuthGuard } from '@nestjs/passport';
 // import { FileInterceptor } from '@nestjs/platform-express/multer';
 @Controller('user')
 @ApiTags('user')
@@ -70,7 +71,7 @@ export class UserController {
 @UseInterceptors(
   FileInterceptor("photo", {
     storage: diskStorage({
-      destination:"./upload/user",
+      destination:"./upload",
       filename: (_request, file, callback) =>
         callback(null, `${new Date().getTime()}-${file.originalname}`),
     }),
@@ -145,7 +146,7 @@ async create(@Res () response ,@Body() createUserDto: CreateUserDto,file: Expres
   name: 'id',
   required: true,
   description: 'Should be an id of a post that exists in the database',
-  //type: Number
+ 
   type:String
 })
   @ApiResponse({
@@ -320,6 +321,30 @@ async create(@Res () response ,@Body() createUserDto: CreateUserDto,file: Expres
     console.log("*****USER:TOKEN*********",token)
   }
 
+  @ApiBody({ schema:{
+    properties:{
+      'email':{type:'string'},
+      'password':{type:'string'}
+    }
+  }})
+    
+    
+  @UseGuards(AuthGuard('local'))
+  //@UseGuards(AccessTokenGuard)
+  @Post('/login')
+  async login(@Request() req) {
+    console.log('%cauth.controller.ts line:14 req', 'color: #007acc;', req.user);
+    return this.userService.login(req.user);
+  }
+   @ApiBearerAuth('access-token')
+  @UseGuards(AccessTokenGuard)
+  @Get('/logout')
+  logout(@Request() req) {
+    console.log("**************:out out out",req.user.sub)
+
+  //  this.authService.logout(req.user.sub);
+   this.userService.logout(req.user['sub']);
+  }
 
 
 }

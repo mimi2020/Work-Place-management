@@ -7,6 +7,9 @@ import { Model } from 'mongoose';
 import { NotFoundException } from '@nestjs/common/exceptions';
 import { IDepartement } from 'src/departement/interface/departement.interface';
 import { MailerService } from '@nestjs-modules/mailer';
+import { JwtService } from '@nestjs/jwt';
+
+import * as argon2 from 'argon2';
 
 @Injectable()
 export class UserService {
@@ -18,7 +21,8 @@ export class UserService {
     private userModel: Model<IUser>,
     @InjectModel('departement')
     private departementModel: Model<IDepartement>,
-    private mailerService: MailerService
+    private mailerService: MailerService,
+    private jwtSerivce: JwtService,
   ) { }
   // async create(createUserDto: CreateUserDto): Promise<IUser> {
   //   //return 'This action adds a new user';
@@ -27,6 +31,7 @@ export class UserService {
   // }
 
   async create(createUserDto: CreateUserDto): Promise<IUser> {
+    console.log('*****************',createUserDto)
     const newUser = new this.userModel(createUserDto);
     await this.departementModel.updateOne(
       { _id: createUserDto.ID_departement },
@@ -124,15 +129,54 @@ async sendUserConfirmation(user: any, token: string) {
       },
     });
   }
-// async deleteSubcategory(SubcategoryId: string):Promise<ISubcategory> {
-//   const deletedSubcategory=await this.subcategoryModel.findByIdAndDelete(SubcategoryId)
-//   await this.categoryModel.updateOne({_id:deletedSubcategory.category} ,
-//     {$pull : {subcategories:deletedSubcategory._id}})
-//   if(!deletedSubcategory){
-//     throw new NotFoundException('Subcategory not found')
-//   }
-//   return deletedSubcategory
-// }
+  async login(user: any) {
+
+    const refreshToken = this.jwtSerivce.sign(
+      {
+        sub: user._id,
+        email: user.email,
+      },
+      {
+        secret: process.env.JWT_REFRESH_SECRET,
+        expiresIn: '7d',
+      },
+    )
+    await this.updateRefreshToken(user._id, refreshToken);
+
+    return {
+      access_token: this.jwtSerivce.sign(
+        {
+          sub: user._id,
+          email: user.email,
+        },
+        {
+          secret: process.env.JWT_ACCESS_SECRET,
+          expiresIn: '15m',
+        },
+      ),
+      refreshToken: refreshToken
+
+    };
+  }
+
+  async updateRefreshToken(userId: string, refreshToken: string) {
+    const hashedRefreshToken = await this.hashData(refreshToken);
+    await this.userModel.findOneAndUpdate({_id:userId}, {
+      refreshToken: hashedRefreshToken,
+    });
+  }
+
+  hashData(data: string) {
+    return argon2.hash(data);
+  }
+
+
+  async logout(userId:string){
+    console.log("userId is:",userId)
+    const refreshtoken=null;
+    console.log("test",refreshtoken)
+    return this.userModel.findOneAndUpdate({_id:userId},refreshtoken)
+  }
 
 }
 /**import { Injectable, NotFoundException } from '@nestjs/common';

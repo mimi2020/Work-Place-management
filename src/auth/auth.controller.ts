@@ -22,22 +22,22 @@ export class AuthController {
   
   
   
-  @UseGuards(AuthGuard('local'))
-  //@UseGuards(AccessTokenGuard)
-  @Post('/login')
-  async login(@Request() req) {
-    console.log('%cauth.controller.ts line:14 req', 'color: #007acc;', req.user);
-    return this.authService.login(req.user);
-  }
-   @ApiBearerAuth('access-token')
-  @UseGuards(AccessTokenGuard)
-  @Get('/logout')
-  logout(@Request() req) {
-    console.log("**************:out out out",req.user.sub)
+  // @UseGuards(AuthGuard('local'))
+  // //@UseGuards(AccessTokenGuard)
+  // @Post('/login')
+  // async login(@Request() req) {
+  //   console.log('%cauth.controller.ts line:14 req', 'color: #007acc;', req.user);
+  //   return this.authService.login(req.user);
+  // }
+  //  @ApiBearerAuth('access-token')
+  // @UseGuards(AccessTokenGuard)
+  // @Get('/logout')
+  // logout(@Request() req) {
+  //   console.log("**************:out out out",req.user.sub)
 
-  //  this.authService.logout(req.user.sub);
-   this.authService.logout(req.user['sub']);
-  }
+  // //  this.authService.logout(req.user.sub);
+  //  this.authService.logout(req.user['sub']);
+  // }
 
   //@ApiBearerAuth('refresh-token')
   // add the apiBody to make the way to add the refresh token

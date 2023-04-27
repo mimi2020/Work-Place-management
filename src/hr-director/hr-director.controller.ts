@@ -137,13 +137,13 @@ export class HrDirectorController {
     try {
       return response.status(HttpStatus.ACCEPTED).json({
         status: 200,
-        message: 'user founed',
+        message: 'location founed',
         data: depfind,
       });
     } catch (error) {
       response.status(HttpStatus.BAD_REQUEST).json({
         status: 500,
-        message: 'user is not founed',
+        message: 'no location',
       });
     }
   }

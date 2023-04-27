@@ -10,7 +10,7 @@ import { DepartementModule } from './departement/departement.module';
 import { HrDirectorModule } from './hr-director/hr-director.module';
 import { PresenceModule } from './presence/presence.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
-
+// import { ConfigModule } from '@nestjs/config';
 import { EmailService } from './email/email.service';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { join } from 'path';

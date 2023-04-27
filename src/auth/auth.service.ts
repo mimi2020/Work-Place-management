@@ -9,7 +9,7 @@ export class AuthService {
 
   constructor(private readonly userService: UserService,
      private jwtSerivce: JwtService,
-     private readonly hrDirectorservice: HrDirectorService,) {
+    ) {
 
   }
 
@@ -74,10 +74,7 @@ export class AuthService {
     return argon2.hash(data);
   }
 
-  // async logout(userId: string) {
-  //   console.log("****************logout auth service userId is:",userId)
-  //   return this.userService.update2(userId, { refreshToken: null });
-  // }
+
   async logout(userId:string){
     console.log("userId is:",userId)
     const refreshtoken=null;
